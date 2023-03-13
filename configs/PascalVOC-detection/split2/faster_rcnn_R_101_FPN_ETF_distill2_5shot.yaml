@@ -1,0 +1,13 @@
+_BASE_: "faster_rcnn_R_101_FPN_ETF_pre2_5shot.yaml"
+MODEL:
+  BACKBONE:
+    FREEZE: True
+  PROPOSAL_GENERATOR:
+    FREEZE: True
+  ROI_HEADS:
+    NAME: "DistillMarginROIHeads"
+LOSS:
+  ADJUST_STAGE: 'distill'
+SOLVER:
+  BASE_LR: 0.04
+OUTPUT_DIR: "checkpoints/voc/distill/t1"

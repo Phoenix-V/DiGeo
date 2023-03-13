@@ -5,11 +5,11 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 DiGeo contains the official generalized few-shot object detection implementation of the CVPR 2023 paper
-[DiGeo ](https://arxiv.org/abs/2003.06957).
+[DiGeo](https://arxiv.org/abs/2003.06957).
 
 More Detailed Instruction will be provided soon.
 
-The pre-trained checkpoints can be found [here] (https://drive.google.com/drive/folders/1w4tcRiiqYL9Z80lYBQOuNQhZGUl0v4l_?usp=share_link)
+The pre-trained checkpoints can be found [here](https://drive.google.com/drive/folders/1w4tcRiiqYL9Z80lYBQOuNQhZGUl0v4l_?usp=share_link)
 
 <!-- 
 In addition to the benchmarks used by previous works, we introduce new benchmarks on three datasets: PASCAL VOC, COCO, and LVIS. We sample multiple groups of few-shot training examples for multiple runs of the experiments and report evaluation results on both the base classes and the novel classes. These are described in more detail in [Data Preparation](#data-preparation).

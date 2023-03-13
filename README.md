@@ -6,7 +6,6 @@
 
 DiGeo contains the official generalized few-shot object detection implementation of the CVPR 2023 paper
 [DiGeo ](https://arxiv.org/abs/2003.06957).
-![TFA Figure](https://user-images.githubusercontent.com/7898443/76520006-698cc200-6438-11ea-864f-fd30b3d50cea.png)
 
 In addition to the benchmarks used by previous works, we introduce new benchmarks on three datasets: PASCAL VOC, COCO, and LVIS. We sample multiple groups of few-shot training examples for multiple runs of the experiments and report evaluation results on both the base classes and the novel classes. These are described in more detail in [Data Preparation](#data-preparation).
 

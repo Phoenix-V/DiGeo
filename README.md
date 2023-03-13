@@ -7,6 +7,11 @@
 DiGeo contains the official generalized few-shot object detection implementation of the CVPR 2023 paper
 [DiGeo ](https://arxiv.org/abs/2003.06957).
 
+More Detailed Instruction will be provided soon.
+
+The pre-trained checkpoints can be found [here] (https://drive.google.com/drive/folders/1w4tcRiiqYL9Z80lYBQOuNQhZGUl0v4l_?usp=share_link)
+
+<!-- 
 In addition to the benchmarks used by previous works, we introduce new benchmarks on three datasets: PASCAL VOC, COCO, and LVIS. We sample multiple groups of few-shot training examples for multiple runs of the experiments and report evaluation results on both the base classes and the novel classes. These are described in more detail in [Data Preparation](#data-preparation).
 
 We also provide benchmark results and pre-trained models for our two-stage fine-tuning approach (TFA). In TFA, we first train the entire object detector on the data-abundant base classes, and then only fine-tune the last layers of the detector on a small balanced training set. See [Models](#models) for our provided models and [Getting Started](#getting-started) for instructions on training and evaluation.
@@ -171,4 +176,4 @@ After training and evaluation, you can use `tools/aggregate_seeds.py` to aggrega
 ```angular2html
 python3 -m tools.aggregate_seeds --shots 3 --seeds 30 --split 1 \
         --print --plot
-```
+``` -->

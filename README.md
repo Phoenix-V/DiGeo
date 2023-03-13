@@ -11,13 +11,6 @@ More Detailed Instruction will be provided soon.
 
 The pre-trained checkpoints can be found [here](https://drive.google.com/drive/folders/1w4tcRiiqYL9Z80lYBQOuNQhZGUl0v4l_?usp=share_link)
 
-<!-- 
-In addition to the benchmarks used by previous works, we introduce new benchmarks on three datasets: PASCAL VOC, COCO, and LVIS. We sample multiple groups of few-shot training examples for multiple runs of the experiments and report evaluation results on both the base classes and the novel classes. These are described in more detail in [Data Preparation](#data-preparation).
-
-We also provide benchmark results and pre-trained models for our two-stage fine-tuning approach (TFA). In TFA, we first train the entire object detector on the data-abundant base classes, and then only fine-tune the last layers of the detector on a small balanced training set. See [Models](#models) for our provided models and [Getting Started](#getting-started) for instructions on training and evaluation.
-
-FsDet is well-modularized so you can easily add your own datasets and models. The goal of this repository is to provide a general framework for few-shot object detection that can be used for future research.
-
 If you find this repository useful for your publications, please consider citing our paper.
 
 ```angular2html
@@ -32,6 +25,14 @@ If you find this repository useful for your publications, please consider citing
 
 ## Updates
 - (March 2023) The code has been released and the checkpoints has been published.
+
+<!-- 
+
+In addition to the benchmarks used by previous works, we introduce new benchmarks on three datasets: PASCAL VOC, COCO, and LVIS. We sample multiple groups of few-shot training examples for multiple runs of the experiments and report evaluation results on both the base classes and the novel classes. These are described in more detail in [Data Preparation](#data-preparation).
+
+We also provide benchmark results and pre-trained models for our two-stage fine-tuning approach (TFA). In TFA, we first train the entire object detector on the data-abundant base classes, and then only fine-tune the last layers of the detector on a small balanced training set. See [Models](#models) for our provided models and [Getting Started](#getting-started) for instructions on training and evaluation.
+
+FsDet is well-modularized so you can easily add your own datasets and models. The goal of this repository is to provide a general framework for few-shot object detection that can be used for future research.
 
 
 ## Table of Contents

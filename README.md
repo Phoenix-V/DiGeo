@@ -5,7 +5,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 DiGeo contains the official generalized few-shot object detection implementation of the CVPR 2023 paper
-[DiGeo: Discriminative Geometry-Aware Learning for Generalized Few-Shot Object Detection](https://arxiv.org/abs/2212.13738).
+[DiGeo: Discriminative Geometry-Aware Learning for Generalized Few-Shot Object Detection](https://arxiv.org/abs/2303.xxxxx) (the paper link will be added soon once available).
 
 ## Overview
 

@@ -21,7 +21,7 @@ If you find this repository useful for your publications, please consider citing
 ```angular2html
 @InProceedings{Ma_2023_CVPR,
     author    = {Ma, Jiawei and Niu, Yulei and Xu, Jincheng and Huang, Shiyuan and Han, Guangxing and Chang, Shih-Fu},
-    title     = {Few-Shot Object Detection With Fully Cross-Transformer},
+    title     = {DiGeo: Discriminative Geometry-Aware Learning for Generalized Few-Shot Object Detection},
     booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
     month     = {June},
     year      = {2023},

@@ -7,8 +7,6 @@
 DiGeo contains the official generalized few-shot object detection implementation of the CVPR 2023 paper
 [DiGeo: Discriminative Geometry-Aware Learning for Generalized Few-Shot Object Detection](https://arxiv.org/abs/2212.13738).
 
-(https://drive.google.com/file/d/1kMw4n89DQF5aW5czpXCKzyCw7b7qBS8Z/view?usp=sharing)
-
 ## Overview
 
 Generalized few-shot object detection aims to achieve precise detection on both base classes with abundant annotations and novel classes with limited training data. However, existing approaches enhance few-shot generalization with the sacrifice of base-class performance, or maintain high precision in base-class detection with limited improvement in novel-class adaptation. In this project, we point out the poor balance between base knowledge preservation and novel knowledge adaptation of existing (G)FSOD approaches. We highlight the reason is that the extracted features are not discriminative enough for all classes and highlight the weakness of existing training pipeline. As such, we propose a new training framework, DiGeo, to learn Geometry-aware features of inter-class separation and intra-class compactness.
@@ -37,14 +35,15 @@ If you find this repository useful for your publications, please consider citing
 
 ## Instillation
 
-Our code is developped on top of the [TFA](https://github.com/ucbdrive/few-shot-object-detection) and please follow their instructions on library (pytorch, detectron2)installization and dataset preparation.
+Our code is developped based upon [TFA](https://github.com/ucbdrive/few-shot-object-detection) and please follow their instructions for library (pytorch, detectron2) installization and dataset preparation.
 - For the library/package used for running the code, the repo has been verified on Pytorch 1.7~1.10. For the instillation of detectron2, we install the pre-compiled version following the instructions [here](https://detectron2.readthedocs.io/en/latest/tutorials/install.html).
-- For the dataset preparation, we would recommend to organize the data in a shared storage server in your own GPU clusters (if applicable) and then crerate a soft link with the destination as 'datasets'.
+- For the dataset preparation, we would recommend to organize the data in a shared storage server in your own GPU clusters (if applicable) and then crerate a soft link towards the root with the destination as 'datasets'.
 
 Finally, the code structure should look like 
 
 - **configs**: Configuration files
 - **datasets**: 
+- **checkpoints**: 
 - **fsdet**
   - **checkpoint**: Checkpoint code.
   - **config**: Configuration code and default configurations.
@@ -62,15 +61,6 @@ Finally, the code structure should look like
 ## Getting Started
 
 Our framework consists of two steps. We first pre-train the detector with fixed margin (i.e., Prior) and then perform self-distillation to adaptively adjust the margins. 
-
-### Inference Demo with Pre-trained Models
-
-The pre-trained checkpoints can be found in `Demo` under [here](https://drive.google.com/drive/folders/1w4tcRiiqYL9Z80lYBQOuNQhZGUl0v4l_?usp=share_link). Please put it under `checkpoints/${dataset}/distill`.
-
-The testing command is provided in an sh file and please run
-```angular2html
-sh scripts/demo.sh
-```
 
 ### Pre-Training (Prior) with Command Line
 
@@ -96,4 +86,11 @@ sh scripts/distill.sh
 ```
 To note, the configuration of distillation inherites the corresponding configuration of pre-training, in particular, the parameters for loss calculation and for ckpt loading & initialization.
 
+## Inference Demo with Pre-trained Models
 
+The pre-trained checkpoints can be found in `Demo` under [here](https://drive.google.com/drive/folders/1w4tcRiiqYL9Z80lYBQOuNQhZGUl0v4l_?usp=share_link). Please put it under `checkpoints/${dataset}/distill`.
+
+The testing command is provided in an sh file and please run
+```angular2html
+sh scripts/demo.sh
+```

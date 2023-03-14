@@ -113,15 +113,82 @@ class Tester:
             ) as fp:
                 json.dump(self.all_res, fp)
 
+def setup_new_config(cfg):
+    cfg.MODEL.ETF.RESIDUAL = True
+    cfg.MODEL.ETF.BACKGROUND = 1
+    cfg.LOSS.TERM = "ce"
+    cfg.LOSS.ADJUST_TAU = 1.0
+    cfg.LOSS.ADJUST_BACK =  1000.0
+    cfg.LOSS.ADJUST_MODE = 'multiply'
+    cfg.LOSS.ADJUST_STAGE = 'fixed'
+    cfg.RESETOUT = False
+    return cfg
 
 def setup(args):
     """
     Create configs and perform basic setups.
     """
     cfg = get_cfg()
+    cfg  = setup_new_config(cfg)
     cfg.merge_from_file(args.config_file)
     if args.opts:
         cfg.merge_from_list(args.opts)
+    if cfg.RESETOUT:
+        dir_comp = cfg.OUTPUT_DIR.split('/')
+        shot = cfg.DATASETS.TRAIN[0].split('_')[-1] # The first one is always the novel set
+        data = cfg.DATASETS.TRAIN[0].split('_')[0]
+        model_key = 'ETFRes' if cfg.MODEL.ETF.RESIDUAL else 'ETF'
+        if data == 'voc':
+            the_split = cfg.DATASETS.TRAIN[0].split('_')[-2][-1]
+            lr = int(1000*cfg.SOLVER.BASE_LR)
+            bk_ratio = cfg.LOSS.ADJUST_BACK/1000.0
+            rfs = cfg.DATALOADER.REPEAT_THRESHOLD * 100 if cfg.DATALOADER.SAMPLER_TRAIN == 'RepeatFactorTrainingSampler' else 0
+            if cfg.LOSS.ADJUST_STAGE == 'distill':
+                assert cfg.MODEL.BACKBONE.FREEZE 
+                print('Logging modification for finetuning')
+                loss_suffix = dir_comp[-1]
+                new_out_dir = '{}_distill{}_{}_lr{}_{}'.format(
+                    model_key, the_split, shot, lr, loss_suffix
+                )
+                new_out_dir = '/'.join(dir_comp[:3]+[new_out_dir])
+                dir_comp = cfg.OUTPUT_DIR.split('/')
+                load_path = 'checkpoints/voc/prior/ETFRes_pre{}_{}_lr20_adj{}_rfs{}_t1/model_clean_student.pth'.format(
+                    the_split, shot, cfg.LOSS.ADJUST_BACK/1000.0, 5.0 if '2' in shot else 1.0,
+                )
+            else:
+                print('Logging modification for pre-training')
+                new_out_dir = '/'.join(dir_comp[:3]+[
+                    '{}_pre{}_{}_lr{}_adj{}_rfs{}_{}'.format(model_key,the_split,shot,lr,bk_ratio,rfs,dir_comp[-1])
+                    if cfg.LOSS.TERM == 'adjustment' else
+                    '{}_pre{}_{}_lr{}_{}'.format(model_key,the_split,shot,lr,dir_comp[-1])
+                ])
+                load_path = None
+        elif data == 'coco':
+            lr = int(1000*cfg.SOLVER.BASE_LR)
+            bk_ratio = cfg.LOSS.ADJUST_BACK/1000.0
+            if cfg.LOSS.ADJUST_STAGE == 'distill':
+                assert cfg.MODEL.BACKBONE.FREEZE 
+                print('Logging modification for finetuning')
+                loss_suffix = dir_comp[-1]
+                new_out_dir = '{}_distill_{}_lr{}_adj{}_{}'.format(
+                    model_key, shot, lr,
+                    bk_ratio, loss_suffix
+                )
+                new_out_dir = '/'.join(dir_comp[:3]+[new_out_dir])
+                load_path = 'checkpoints/coco/prior/ETFRes_pre_{}_lr20_adj{}.0_rfs2.5_t1/model_clean_student.pth'.format(
+                    shot, 20 if '30' in shot else 10,
+                )
+            else:
+                print('Logging modification for pre-training')
+                rfs = cfg.DATALOADER.REPEAT_THRESHOLD * 100 if cfg.DATALOADER.SAMPLER_TRAIN == 'RepeatFactorTrainingSampler' else 0
+                new_out_dir = '/'.join(dir_comp[:3]+[
+                    '{}_pre_{}_lr{}_adj{}_rfs{}_{}'.format(model_key,shot,lr,bk_ratio,rfs,dir_comp[-1])
+                    if cfg.LOSS.TERM == 'adjustment' else
+                    '{}_pre_{}_lr{}_{}'.format(model_key,shot,lr,dir_comp[-1])
+                ])
+                load_path = None
+        new_cfg_list = ['OUTPUT_DIR',new_out_dir] if load_path is None else ['OUTPUT_DIR',new_out_dir,'MODEL.WEIGHTS',load_path]
+        cfg.merge_from_list(new_cfg_list)
     cfg.freeze()
     set_global_cfg(cfg)
     default_setup(cfg, args)
@@ -140,7 +207,7 @@ def main(args):
             resume = False
         else:
             # load checkpoint at last iteration
-            ckpt_file = cfg.MODEL.WEIGHTS
+            ckpt_file = 'model_final.pth'
             resume = True
         DetectionCheckpointer(model, save_dir=cfg.OUTPUT_DIR).resume_or_load(
             ckpt_file, resume=resume

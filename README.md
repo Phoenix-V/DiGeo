@@ -94,6 +94,6 @@ To perform the distillation stage, simply run
 ```angular2html
 sh scripts/distill.sh
 ```
-To note, the configuration of distillation inherites the corresponding configuration of pre-training, in particular, the parameters for loss calculation and the ckpt loading for initialization.
+To note, the configuration of distillation inherites the corresponding configuration of pre-training, in particular, the parameters for loss calculation and for ckpt loading & initialization.
 
 
